@@ -1,0 +1,358 @@
+<html><head><base href="https://newspro.com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoticiasNewPro</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+<style>
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --text-color: #333;
+  --bg-color: #f9f9f9;
+  --card-bg: #fff;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --text-color: #f9f9f9;
+  --bg-color: #333;
+  --card-bg: #444;
+  --shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #27ae60;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.news-carousel {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-item .carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem;
+}
+
+.news-card {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s;
+  flex: 1 1 calc(33.333% - 2rem);
+  min-width: 300px;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.news-card-content {
+  padding: 1rem;
+}
+
+.news-card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.news-card p {
+  margin-bottom: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.social-icons a {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--secondary-color);
+}
+
+.login-form {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 10px 0 0 10px;
+  box-shadow: var(--shadow);
+}
+
+.login-form h3 {
+  margin-top: 0;
+}
+
+.login-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login-form button {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .news-card {
+    flex: 1 1 100%;
+  }
+  
+  .login-form {
+    position: static;
+    transform: none;
+    margin-top: 2rem;
+    border-radius: 10px;
+  }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>NoticiasNewPro</h1>
+  <nav>
+    <button id="theme-toggle">Cambiar tema</button>
+    <select id="country-select">
+      <option value="">Todos los países</option>
+      <option value="es">España</option>
+      <option value="fr">Francia</option>
+      <option value="de">Alemania</option>
+      <option value="it">Italia</option>
+      <option value="gb">Reino Unido</option>
+    </select>
+  </nav>
+</header>
+
+<main>
+  <div class="news-carousel">
+    <!-- Carousel items will be dynamically added here -->
+  </div>
+  
+  <div id="news-container">
+    <!-- News cards will be dynamically added here -->
+  </div>
+</main>
+
+<aside class="login-form">
+  <h3>Registro (Opcional)</h3>
+  <form id="register-form">
+    <input type="text" placeholder="Nombre" required>
+    <input type="email" placeholder="Correo electrónico" required>
+    <input type="password" placeholder="Contraseña" required>
+    <button type="submit">Registrarse</button>
+  </form>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+const API_KEY = '9be7c465bfb249c59f3e5470d2b76ff8';
+const newsContainer = document.getElementById('news-container');
+const carousel = document.querySelector('.news-carousel');
+const countrySelect = document.getElementById('country-select');
+const themeToggle = document.getElementById('theme-toggle');
+const registerForm = document.getElementById('register-form');
+
+let currentPage = 1;
+let currentCountry = '';
+
+async function fetchNews(page = 1) {
+  try {
+    const url = `https://newsapi.org/v2/top-headlines?pageSize=9&page=${page}&apiKey=${API_KEY}${currentCountry ? `&country=${currentCountry}` : ''}`;
+    const response = await axios.get(url);
+    return response.data.articles;
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    return [];
+  }
+}
+
+function createNewsCard(article) {
+  const card = document.createElement('div');
+  card.className = 'news-card';
+  card.innerHTML = `
+    <img src="${article.urlToImage || 'https://via.placeholder.com/300x200'}" alt="${article.title}">
+    <div class="news-card-content">
+      <h2>${article.title}</h2>
+      <p>${article.description || 'No description available'}</p>
+      <a href="${article.url}" target="_blank">Read more</a>
+      <div class="social-icons">
+        <a href="https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(article.url)}" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(article.url)}&text=${encodeURIComponent(article.title)}" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(article.title + ' ' + article.url)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+async function displayNews(page = 1) {
+  const articles = await fetchNews(page);
+  newsContainer.innerHTML = '';
+  articles.forEach(article => {
+    newsContainer.appendChild(createNewsCard(article));
+  });
+}
+
+function createCarouselItem(article) {
+  const item = document.createElement('div');
+  item.className = 'carousel-item';
+  item.innerHTML = `
+    <img src="${article.urlToImage || 'https://via.placeholder.com/800x400'}" alt="${article.title}">
+    <div class="carousel-caption">
+      <h2>${article.title}</h2>
+      <p>${article.description || 'No description available'}</p>
+    </div>
+  `;
+  return item;
+}
+
+async function initCarousel() {
+  const articles = await fetchNews();
+  carousel.innerHTML = '';
+  articles.slice(0, 5).forEach((article, index) => {
+    const item = createCarouselItem(article);
+    if (index === 0) item.classList.add('active');
+    carousel.appendChild(item);
+  });
+
+  let currentSlide = 0;
+  setInterval(() => {
+    const items = carousel.querySelectorAll('.carousel-item');
+    items[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % items.length;
+    items[currentSlide].classList.add('active');
+  }, 5000);
+}
+
+countrySelect.addEventListener('change', (e) => {
+  currentCountry = e.target.value;
+  currentPage = 1;
+  displayNews(currentPage);
+  initCarousel();
+});
+
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+});
+
+registerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const userData = Object.fromEntries(formData.entries());
+  console.log('User registered:', userData);
+  // Here you would typically send this data to your backend
+  alert('Registro exitoso!');
+});
+
+window.addEventListener('load', () => {
+  displayNews(currentPage);
+  initCarousel();
+});
+
+// Infinite scroll
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+    currentPage++;
+    displayNews(currentPage);
+  }
+});
+</script>
+</body></html>
